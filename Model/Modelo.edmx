@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BoxcoinModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BoxcoinModelStoreContainer">
+    <EntitySet Name="EntidadSet" EntityType="BoxcoinModel.Store.EntidadSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="menu_opciones" EntityType="BoxcoinModel.Store.menu_opciones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="pepito" EntityType="BoxcoinModel.Store.pepito" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="permisos" EntityType="BoxcoinModel.Store.permisos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="permisos_por_rol" EntityType="BoxcoinModel.Store.permisos_por_rol" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="roles" EntityType="BoxcoinModel.Store.roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="roles_por_usuario" EntityType="BoxcoinModel.Store.roles_por_usuario" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="usuarios" EntityType="BoxcoinModel.Store.usuarios" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_permisos_menu" Association="BoxcoinModel.Store.FK_permisos_menu">
+      <End Role="menu_opciones" EntitySet="menu_opciones" />
+      <End Role="permisos" EntitySet="permisos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ppr_PERMISOS" Association="BoxcoinModel.Store.FK_ppr_PERMISOS">
+      <End Role="permisos" EntitySet="permisos" />
+      <End Role="permisos_por_rol" EntitySet="permisos_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ppr_ROLES" Association="BoxcoinModel.Store.FK_ppr_ROLES">
+      <End Role="roles" EntitySet="roles" />
+      <End Role="permisos_por_rol" EntitySet="permisos_por_rol" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rolesPorUsuario_ROL" Association="BoxcoinModel.Store.fk_rolesPorUsuario_ROL">
+      <End Role="roles" EntitySet="roles" />
+      <End Role="roles_por_usuario" EntitySet="roles_por_usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rolesPorUsuario_USUARIO" Association="BoxcoinModel.Store.fk_rolesPorUsuario_USUARIO">
+      <End Role="usuarios" EntitySet="usuarios" />
+      <End Role="roles_por_usuario" EntitySet="roles_por_usuario" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EntidadSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="calle" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="numero_calle" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="menu_opciones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="menu" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="pepito">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="apellido" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="id_entidad" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="permisos">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="permiso" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="id_menu" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="permisos_por_rol">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_permiso" Type="int" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="roles">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="rol" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="roles_por_usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_usuario" Type="int" Nullable="false" />
+    <Property Name="id_rol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" Nullable="true" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_permisos_menu">
+    <End Role="menu_opciones" Type="BoxcoinModel.Store.menu_opciones" Multiplicity="0..1" />
+    <End Role="permisos" Type="BoxcoinModel.Store.permisos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="menu_opciones">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="permisos">
+        <PropertyRef Name="id_menu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ppr_PERMISOS">
+    <End Role="permisos" Type="BoxcoinModel.Store.permisos" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="permisos_por_rol" Type="BoxcoinModel.Store.permisos_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="permisos">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="permisos_por_rol">
+        <PropertyRef Name="id_permiso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ppr_ROLES">
+    <End Role="roles" Type="BoxcoinModel.Store.roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="permisos_por_rol" Type="BoxcoinModel.Store.permisos_por_rol" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="permisos_por_rol">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_rolesPorUsuario_ROL">
+    <End Role="roles" Type="BoxcoinModel.Store.roles" Multiplicity="1" />
+    <End Role="roles_por_usuario" Type="BoxcoinModel.Store.roles_por_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="roles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="roles_por_usuario">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_rolesPorUsuario_USUARIO">
+    <End Role="usuarios" Type="BoxcoinModel.Store.usuarios" Multiplicity="1" />
+    <End Role="roles_por_usuario" Type="BoxcoinModel.Store.roles_por_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuarios">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="roles_por_usuario">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BoxcoinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BoxcoinEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EntidadSet" EntityType="BoxcoinModel.EntidadSet" />
+          <EntitySet Name="menu_opciones" EntityType="BoxcoinModel.menu_opciones" />
+          <EntitySet Name="pepito" EntityType="BoxcoinModel.pepito" />
+          <EntitySet Name="permisos" EntityType="BoxcoinModel.permisos" />
+          <EntitySet Name="permisos_por_rol" EntityType="BoxcoinModel.permisos_por_rol" />
+          <EntitySet Name="roles" EntityType="BoxcoinModel.roles" />
+          <EntitySet Name="roles_por_usuario" EntityType="BoxcoinModel.roles_por_usuario" />
+          <EntitySet Name="usuarios" EntityType="BoxcoinModel.usuarios" />
+          <AssociationSet Name="FK_permisos_menu" Association="BoxcoinModel.FK_permisos_menu">
+            <End Role="menu_opciones" EntitySet="menu_opciones" />
+            <End Role="permisos" EntitySet="permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ppr_PERMISOS" Association="BoxcoinModel.FK_ppr_PERMISOS">
+            <End Role="permisos" EntitySet="permisos" />
+            <End Role="permisos_por_rol" EntitySet="permisos_por_rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ppr_ROLES" Association="BoxcoinModel.FK_ppr_ROLES">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="permisos_por_rol" EntitySet="permisos_por_rol" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolesPorUsuario_ROL" Association="BoxcoinModel.fk_rolesPorUsuario_ROL">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="roles_por_usuario" EntitySet="roles_por_usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolesPorUsuario_USUARIO" Association="BoxcoinModel.fk_rolesPorUsuario_USUARIO">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="roles_por_usuario" EntitySet="roles_por_usuario" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EntidadSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="calle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="numero_calle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="menu_opciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="menu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="permisos" Relationship="BoxcoinModel.FK_permisos_menu" FromRole="menu_opciones" ToRole="permisos" />
+        </EntityType>
+        <EntityType Name="pepito">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_entidad" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="permisos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="permiso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_menu" Type="Int32" />
+          <NavigationProperty Name="menu_opciones" Relationship="BoxcoinModel.FK_permisos_menu" FromRole="permisos" ToRole="menu_opciones" />
+          <NavigationProperty Name="permisos_por_rol" Relationship="BoxcoinModel.FK_ppr_PERMISOS" FromRole="permisos" ToRole="permisos_por_rol" />
+        </EntityType>
+        <EntityType Name="permisos_por_rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_permiso" Type="Int32" Nullable="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="permisos" Relationship="BoxcoinModel.FK_ppr_PERMISOS" FromRole="permisos_por_rol" ToRole="permisos" />
+          <NavigationProperty Name="roles" Relationship="BoxcoinModel.FK_ppr_ROLES" FromRole="permisos_por_rol" ToRole="roles" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="permisos_por_rol" Relationship="BoxcoinModel.FK_ppr_ROLES" FromRole="roles" ToRole="permisos_por_rol" />
+          <NavigationProperty Name="roles_por_usuario" Relationship="BoxcoinModel.fk_rolesPorUsuario_ROL" FromRole="roles" ToRole="roles_por_usuario" />
+        </EntityType>
+        <EntityType Name="roles_por_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="roles" Relationship="BoxcoinModel.fk_rolesPorUsuario_ROL" FromRole="roles_por_usuario" ToRole="roles" />
+          <NavigationProperty Name="usuarios" Relationship="BoxcoinModel.fk_rolesPorUsuario_USUARIO" FromRole="roles_por_usuario" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="roles_por_usuario" Relationship="BoxcoinModel.fk_rolesPorUsuario_USUARIO" FromRole="usuarios" ToRole="roles_por_usuario" />
+        </EntityType>
+        <Association Name="FK_permisos_menu">
+          <End Type="BoxcoinModel.menu_opciones" Role="menu_opciones" Multiplicity="0..1" />
+          <End Type="BoxcoinModel.permisos" Role="permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu_opciones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="permisos">
+              <PropertyRef Name="id_menu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ppr_PERMISOS">
+          <End Type="BoxcoinModel.permisos" Role="permisos" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BoxcoinModel.permisos_por_rol" Role="permisos_por_rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permisos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="permisos_por_rol">
+              <PropertyRef Name="id_permiso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ppr_ROLES">
+          <End Type="BoxcoinModel.roles" Role="roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BoxcoinModel.permisos_por_rol" Role="permisos_por_rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="permisos_por_rol">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolesPorUsuario_ROL">
+          <End Type="BoxcoinModel.roles" Role="roles" Multiplicity="1" />
+          <End Type="BoxcoinModel.roles_por_usuario" Role="roles_por_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="roles_por_usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolesPorUsuario_USUARIO">
+          <End Type="BoxcoinModel.usuarios" Role="usuarios" Multiplicity="1" />
+          <End Type="BoxcoinModel.roles_por_usuario" Role="roles_por_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="roles_por_usuario">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BoxcoinModelStoreContainer" CdmEntityContainer="BoxcoinEntities">
+    <EntitySetMapping Name="EntidadSet">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.EntidadSet)">
+        <MappingFragment StoreEntitySet="EntidadSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="numero_calle" ColumnName="numero_calle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="menu_opciones">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.menu_opciones)">
+        <MappingFragment StoreEntitySet="menu_opciones">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="menu" ColumnName="menu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pepito">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.pepito)">
+        <MappingFragment StoreEntitySet="pepito">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="id_entidad" ColumnName="id_entidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="permisos">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.permisos)">
+        <MappingFragment StoreEntitySet="permisos">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="permiso" ColumnName="permiso" />
+          <ScalarProperty Name="id_menu" ColumnName="id_menu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="permisos_por_rol">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.permisos_por_rol)">
+        <MappingFragment StoreEntitySet="permisos_por_rol">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_permiso" ColumnName="id_permiso" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.roles)">
+        <MappingFragment StoreEntitySet="roles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="rol" ColumnName="rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles_por_usuario">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.roles_por_usuario)">
+        <MappingFragment StoreEntitySet="roles_por_usuario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuarios">
+      <EntityTypeMapping TypeName="IsTypeOf(BoxcoinModel.usuarios)">
+        <MappingFragment StoreEntitySet="usuarios">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

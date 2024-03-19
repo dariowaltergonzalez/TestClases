@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0a786fad071844e2b63b756ee4ec5249" Name="Diagram1">
+        <EntityTypeShape EntityType="BoxcoinModel.EntidadSet" Width="1.5" PointX="5.75" PointY="2.125" />
+        <EntityTypeShape EntityType="BoxcoinModel.menu_opciones" Width="1.5" PointX="1.5" PointY="10" />
+        <EntityTypeShape EntityType="BoxcoinModel.pepito" Width="1.5" PointX="2.75" PointY="7.125" />
+        <EntityTypeShape EntityType="BoxcoinModel.permisos" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BoxcoinModel.permisos_por_rol" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="BoxcoinModel.roles" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="BoxcoinModel.roles_por_usuario" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="BoxcoinModel.usuarios" Width="1.5" PointX="0.75" PointY="1.125" />
+        <AssociationConnector Association="BoxcoinModel.FK_permisos_menu" />
+        <AssociationConnector Association="BoxcoinModel.FK_ppr_PERMISOS" />
+        <AssociationConnector Association="BoxcoinModel.FK_ppr_ROLES" />
+        <AssociationConnector Association="BoxcoinModel.fk_rolesPorUsuario_ROL" />
+        <AssociationConnector Association="BoxcoinModel.fk_rolesPorUsuario_USUARIO" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
